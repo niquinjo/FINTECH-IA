@@ -5,28 +5,28 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --background: oklch(0.98 0.005 255);
-  --foreground: oklch(0.21 0.01 255);
+  --color-background: oklch(0.98 0.005 255);
+  --color-foreground: oklch(0.21 0.01 255);
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.01 255);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.21 0.01 255);
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.01 255);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.21 0.01 255);
 
-  --primary: oklch(0.72 0.17 157);
-  --primary-foreground: oklch(1 0 0);
+  --color-primary: oklch(0.72 0.17 157);
+  --color-primary-foreground: oklch(1 0 0);
 
-  --secondary: oklch(0.96 0.008 255);
-  --secondary-foreground: oklch(0.21 0.01 255);
+  --color-secondary: oklch(0.96 0.008 255);
+  --color-secondary-foreground: oklch(0.21 0.01 255);
 
-  --muted: oklch(0.96 0.008 255);
-  --muted-foreground: oklch(0.55 0.015 255);
+  --color-muted: oklch(0.96 0.008 255);
+  --color-muted-foreground: oklch(0.55 0.015 255);
 
-  --border: oklch(0.92 0.01 255);
-  --input: oklch(0.92 0.01 255);
+  --color-border: oklch(0.92 0.01 255);
+  --color-input: oklch(0.92 0.01 255);
 
-  --ring: oklch(0.72 0.17 157);
+  --color-ring: oklch(0.72 0.17 157);
 
   --radius: 1rem;
 }
