@@ -10,6 +10,7 @@ interface FetchOptions extends RequestInit {
 
 }
 
+//o <T> é um tipo genérico do TS, ou seja, assume o tipo que for atribuido para ele. neste caso retornamos uma promise.
 export async function apiClient<T>(
   endpoint: string,  //aqui seria  a URL. ex: /user...
   options: FetchOptions = {}

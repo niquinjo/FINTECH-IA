@@ -1,7 +1,7 @@
 "use client"
-import { useActionState } from 'react';
-import { useRegisterForm } from '../hooks/register-form';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
+import { useRegisterForm, RegisterFormData } from '../hooks/register-form';
+import { Card, CardContent } from '@/components/ui/card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,7 +10,31 @@ import { Button } from '@/components/ui/button';
 import { registerUser } from '../actions/auth';
 
 export function RegisterContent() {
-  const [state, formAction, isPending] = useActionState(registerUser, null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const form = useRegisterForm();
+
+  const onSubmit = async (data: RegisterFormData) => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    const result = await registerUser({
+      name: data.name,
+      email: data.email,
+      password: data.password
+    });
+
+    setIsLoading(false);
+
+    if (result.success) {
+      setIsOpen(false);
+      form.reset();
+    } else {
+      setErrorMessage(result.error);
+    }
+  };
 
   return (
     <div className="w-full max-w-md space-y-8 mt-3">
@@ -18,43 +42,87 @@ export function RegisterContent() {
         <CardContent className="space-y-6">
           <div className='space-y-2'>
             <Label className='font-semibold'>Não tem uma conta?</Label>
-            <Dialog>
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" className='w-full'>
                   Clique aqui para se cadastrar
                 </Button>
               </DialogTrigger>
               <DialogContent className='sm:max-w-[425px]'>
-                <form action={formAction} className="space-y-4">
-                  <DialogHeader>
-                    <DialogTitle className="text-3xl sm:text-4xl font-bold">Cadastre-se</DialogTitle>
-                    <DialogDescription>Preencha os campos abaixo para criar sua conta.</DialogDescription>
-                  </DialogHeader>
+                <DialogHeader>
+                  <DialogTitle className="text-3xl sm:text-4xl font-bold">Cadastre-se</DialogTitle>
+                  <DialogDescription>Preencha os campos abaixo para criar sua conta.</DialogDescription>
+                </DialogHeader>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nome*</Label>
-                    <Input id="name" name="name" required minLength={3} placeholder="Digite seu nome..." />
-                  </div>
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email*</Label>
-                    <Input id="email" name="email" required type="email" placeholder="Digite seu email..." />
-                  </div>
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nome*</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Digite seu nome..." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Senha*</Label>
-                    <Input id="password" name="password" required type="password" minLength={8} placeholder="Digite sua senha..." />
-                  </div>
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email*</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="Digite seu email..." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">Confirme sua senha*</Label>
-                    <Input id="confirmPassword" name="confirmPassword" required type="password" minLength={8} placeholder="Confirme a senha..." />
-                  </div>
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha*</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="Digite sua senha..." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <Button type="submit" className="w-full" disabled={isPending}>
-                    {isPending ? "Cadastrando..." : "Cadastrar"}
-                  </Button>
-                </form>
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Confirme sua senha*</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="Confirme a senha..." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {errorMessage && (
+                      <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
+                    )}
+
+                    <Button type="submit" className="w-full" disabled={isLoading}>
+                      {isLoading ? "Cadastrando..." : "Cadastrar"}
+                    </Button>
+
+                  </form>
+                </Form>
               </DialogContent>
             </Dialog>
           </div>

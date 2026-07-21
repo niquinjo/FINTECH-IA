@@ -12,11 +12,11 @@ const registerSchema = z.object({
   (data) => data.password === data.confirmPassword,
   {
     message: "As senhas não coincidem",
-    path: ["confirmPassword"] // path do campo que vai receber o erro
+    path: ["confirmPassword"]
   }
 );
 
-type RegisterFormData = z.infer<typeof registerSchema>
+export type RegisterFormData = z.infer<typeof registerSchema>
 
 export function useRegisterForm() {
   return useForm<RegisterFormData>({
