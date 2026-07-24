@@ -1,9 +1,16 @@
-"use client";
+import { getUser } from '@/lib/auth';
 import GoogleLoginButton from './_components/google-login-button';
 import { LoginContent } from './_components/login';
 import { RegisterContent } from './_components/register';
-export default function AuthPage() {
+import { redirect } from 'next/navigation';
 
+export default async function AuthPage() {
+
+  const user = await getUser();
+
+  if (user) {
+    redirect("/dashboard")
+  }
 
   return (
     <div className="flex h-screen">

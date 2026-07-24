@@ -1,7 +1,8 @@
 "use server"
 import { apiClient } from "@/lib/api";
 import { User } from "@/lib/types"
-import { setToken } from "@/lib/auth"
+import { setToken, removeToken } from "@/lib/auth"
+import { redirect } from "next/navigation";
 
 // A assinatura agora é simples e limpa
 export async function registerUser(data: { name: string, email: string, password: string }) {
@@ -37,4 +38,9 @@ export async function loginUser(data: { email: string, password: string }) {
     }
     return { success: false, error: "Erro ao entrar na conta" };
   }
+}
+
+export async function logoutUser() {
+  await removeToken();
+  redirect("/")
 }

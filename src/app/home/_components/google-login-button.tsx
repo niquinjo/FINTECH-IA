@@ -1,8 +1,9 @@
+"use client"
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import axios from 'axios';
 
 export default function GoogleLoginButton() {
-  
+
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     // 1. O Google te deu o Token dele!
@@ -28,7 +29,7 @@ export default function GoogleLoginButton() {
   };
 
   return (
-    
+
     <GoogleLogin
       onSuccess={handleGoogleSuccess}
       onError={() => console.log('Login Falhou')}
