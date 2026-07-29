@@ -10,3 +10,11 @@ export interface User {
   updatedAt: string
 }
 
+
+export interface Category {
+  id: string;
+  user_id: string;
+  name: string;
+  createdAt: string; 
+  updatedAt: string;
+}
