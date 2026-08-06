@@ -4,7 +4,7 @@ import { ChartNoAxesCombined, CreditCard, LogOut, Menu, Settings } from 'lucide-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { Button } from '../ui/button';
-import { logoutUser } from '@/app/home/actions/auth';
+import { logoutUser } from '@/actions/auth';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet';
 import { useState } from 'react';
 

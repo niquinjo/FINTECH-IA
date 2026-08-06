@@ -4,7 +4,7 @@ import { ChartNoAxesCombined, CreditCard, LogOut, Settings } from 'lucide-react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { Button } from '../ui/button';
-import { logoutUser } from '@/app/home/actions/auth';
+import { logoutUser } from '@/actions/auth';
 
 interface SidebarProps {
   userName: string;

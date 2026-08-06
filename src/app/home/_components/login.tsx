@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { loginUser } from '../actions/auth';
+import { loginUser } from '../../../actions/auth';
 import { useRouter } from 'next/navigation';
 
 export function LoginContent() {
