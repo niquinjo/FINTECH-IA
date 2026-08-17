@@ -29,6 +29,31 @@
   --color-ring: oklch(0.72 0.17 157);
 
   --radius: 1rem;
+
+  --color-brand-dark: #040617;
+  --color-brand-primary: #1c3eaf;
+  --color-brand-secondary: #142269;
+  --color-brand-accent: #6da6d7;
+  --color-brand-muted: #7c7c80;
+}
+
+/* Scrollbar Global Fina e Azul */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.4); /* Azul com transparência */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.8); /* Azul mais forte ao passar o mouse */
 }
 
 @theme inline {

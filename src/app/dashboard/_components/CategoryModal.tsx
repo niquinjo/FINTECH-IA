@@ -1,10 +1,11 @@
 "use client"
+
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Category } from "@/lib/types";
-import { Tags } from 'lucide-react';
+import { Tag } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { createCategoryAction } from '@/actions/categories';
 import { useRouter } from 'next/navigation';
@@ -15,70 +16,75 @@ interface CategoryModalProps {
 
 export default function CategoryModal({ categories }: CategoryModalProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   async function handleCreateCategory(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsLoading(true);
 
-    const formData = new FormData(e.currentTarget)
-    const result = await createCategoryAction(formData)
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const result = await createCategoryAction(formData);
+
+    setIsLoading(false);
 
     if (result.success) {
+      form.reset();
+      setIsOpen(false);
       router.refresh();
       return;
     } else {
-      console.log(result.error)
-      // colocar um alerta/aviso depois para ser mais dinamico.
+      console.log(result.error);
     }
-
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="px-4 py-2 rounded-lg font-medium">
+        <Button variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/20 font-semibold shadow-xs transition-all cursor-pointer rounded-xl">
           Categorias
         </Button>
       </DialogTrigger>
 
-      <DialogContent className='sm:max-w-[425px] max-h-[85vh] overflow-y-auto p-6'>
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Categorias</DialogTitle>
-          <DialogDescription>Gerencie suas categorias ou crie uma nova.</DialogDescription>
+      <DialogContent className='sm:max-w-xl bg-gradient-to-br from-brand-secondary to-brand-primary text-white border border-brand-primary/30 rounded-2xl shadow-2xl p-6 md:p-8 max-h-[85vh] overflow-y-auto'>
+        <DialogHeader className="mb-2">
+          <DialogTitle className="text-2xl font-bold text-white">Categorias</DialogTitle>
+          <DialogDescription className="text-brand-accent">Gerencie suas categorias existentes ou cadastre uma nova.</DialogDescription>
         </DialogHeader>
 
         {/* 1. SEÇÃO DE LISTAGEM */}
-        <div className="mb-2">
-          <h4 className="font-semibold text-sm text-gray-700 mb-3">Categorias Existentes:</h4>
-          <div className="gap-2 grid grid-cols-1 md:grid-cols-3">
-            {/*quero estilizar melhor as categorias q vao aparecer no mobiles DEPOIS. */}
+        <div className="mb-4">
+          <h4 className="font-semibold text-sm text-brand-accent mb-3">Categorias Existentes:</h4>
+          
+          <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-brand-accent/40 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-brand-accent">
             {categories && categories.length > 0 ? (
               categories.map((cat) => (
-
-                <span
+                <div
                   key={cat.id}
-                  className=" flex bg-gray-100 text-gray-700 px-5 mx-auto py-1 rounded-full text-sm border border-gray-200"
+                  className="flex items-center gap-2 bg-brand-dark/50 text-white px-3.5 py-2 rounded-xl text-sm border border-brand-primary/30 shadow-xs transition-all hover:bg-brand-dark/70"
                 >
-                  <Tags className='w-4 h-4' />
-                  {cat.name}
-                </span>
+                  <Tag className='w-4 h-4 text-brand-accent shrink-0' />
+                  <span className="font-medium">{cat.name}</span>
+                </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500">Nenhuma categoria cadastrada ainda.</p>
+              <p className="text-sm text-brand-muted py-2">Nenhuma categoria cadastrada ainda.</p>
             )}
           </div>
         </div>
 
-        <hr className="my-4 border-gray-200" />
+        <hr className="my-6 border-brand-primary/30" />
 
+        {/* 2. SEÇÃO DE CRIAÇÃO */}
         <div>
-          <h4 className="font-semibold text-sm text-gray-700 mb-3">
-            Adicionar nova categória:
+          <h4 className="font-semibold text-sm text-brand-accent mb-3">
+            Adicionar nova categoria:
           </h4>
 
           <form onSubmit={handleCreateCategory} className='space-y-4'>
             <div>
-              <Label className='my-3' htmlFor="category">
+              <Label className='text-white font-medium mb-2 block' htmlFor="name">
                 Nome da nova Categoria*
               </Label>
 
@@ -86,14 +92,17 @@ export default function CategoryModal({ categories }: CategoryModalProps) {
                 id='name'
                 name='name'
                 required
-                placeholder='Ex: Comida, Viajem, Saúde...'
+                placeholder='Ex: Comida, Viagem, Saúde...'
+                className="bg-brand-dark/60 border-brand-primary/40 text-white placeholder:text-brand-muted focus-visible:ring-brand-accent rounded-xl h-12"
               />
             </div>
+            
             <Button
               type='submit'
-              className='w-full'
+              disabled={isLoading}
+              className='w-full bg-brand-primary hover:bg-brand-primary/80 text-white font-bold rounded-xl transition shadow-lg h-12 cursor-pointer'
             >
-              Criar categória
+              {isLoading ? "Criando..." : "Criar categoria"}
             </Button>
           </form>
         </div>

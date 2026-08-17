@@ -1,10 +1,8 @@
 "use client"
 import { useState } from 'react';
 import { useRegisterForm, RegisterFormData } from '../hooks/register-form';
-import { Card, CardContent } from '@/components/ui/card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { registerUser } from '../../../actions/auth';
@@ -38,96 +36,100 @@ export function RegisterContent() {
 
   return (
     <div className="w-full max-w-md space-y-8 mt-3">
-      <Card className="w-full max-w-md mx-auto">
-        <CardContent className="space-y-6">
-          <div className='space-y-2'>
-            <Label className='font-semibold'>Não tem uma conta?</Label>
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" className='w-full'>
-                  Clique aqui para se cadastrar
-                </Button>
-              </DialogTrigger>
-              <DialogContent className='sm:max-w-[425px]'>
-                <DialogHeader>
-                  <DialogTitle className="text-3xl sm:text-4xl font-bold">Cadastre-se</DialogTitle>
-                  <DialogDescription>Preencha os campos abaixo para criar sua conta.</DialogDescription>
-                </DialogHeader>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <p className="text-sm text-brand-dark/80 font-medium">
+          Não tem uma conta?{" "}
+          <DialogTrigger asChild>
+            <button className="text-brand-dark font-bold hover:text-brand-primary hover:underline transition-colors">
+              Clique aqui para se cadastrar
+            </button>
+          </DialogTrigger>
+        </p>
 
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {/* Modal atualizado: Gradiente no fundo, mais margem interna (p-8 sm:px-10), sem bordas */}
+        <DialogContent className="sm:max-w-[480px] border-none shadow-2xl bg-gradient-to-br from-brand-accent to-brand-muted p-8 sm:px-10">
+          <DialogHeader className="mb-2">
+            <DialogTitle className="text-3xl font-bold text-brand-dark tracking-tight">Crie sua conta</DialogTitle>
+            <DialogDescription className="text-brand-dark/80 font-medium text-base">
+              Leva menos de um minuto para começar a organizar sua vida.
+            </DialogDescription>
+          </DialogHeader>
 
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Nome*</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Digite seu nome..." {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email*</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="Digite seu email..." {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-dark font-bold">Nome*</FormLabel>
+                    <FormControl>
+                      <Input className="bg-white border-transparent focus:border-brand-primary text-black shadow-sm" placeholder="Digite seu nome..." {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-800" />
+                  </FormItem>
+                )}
+              />
 
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Senha*</FormLabel>
-                          <FormControl>
-                            <Input type="password" placeholder="Digite sua senha..." {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-dark font-bold">Email*</FormLabel>
+                    <FormControl>
+                      <Input className="bg-white border-transparent focus:border-brand-primary text-black shadow-sm" type="email" placeholder="Digite seu email..." {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-800" />
+                  </FormItem>
+                )}
+              />
 
-                    <FormField
-                      control={form.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Confirme sua senha*</FormLabel>
-                          <FormControl>
-                            <Input type="password" placeholder="Confirme a senha..." {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-dark font-bold">Senha*</FormLabel>
+                    <FormControl>
+                      <Input className="bg-white border-transparent focus:border-brand-primary text-black shadow-sm" type="password" placeholder="Crie uma senha forte..." {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-800" />
+                  </FormItem>
+                )}
+              />
 
-                    {errorMessage && (
-                      <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
-                    )}
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-dark font-bold">Confirme sua senha*</FormLabel>
+                    <FormControl>
+                      <Input className="bg-white border-transparent focus:border-brand-primary text-black shadow-sm" type="password" placeholder="Confirme a senha..." {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-800" />
+                  </FormItem>
+                )}
+              />
 
-                    <Button type="submit" className="w-full" disabled={isLoading}>
-                      {isLoading ? "Cadastrando..." : "Cadastrar"}
-                    </Button>
+              {errorMessage && (
+                <p className="text-red-800 bg-red-100 p-2 rounded text-sm font-semibold text-center">{errorMessage}</p>
+              )}
 
-                  </form>
-                </Form>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </CardContent>
-      </Card>
+              <Button
+                type="submit"
+                className="w-full bg-linear-to-br from-brand-secondary to-brand-primary hover:from-brand-accent hover:to-brand-muted hover:bg-transparent text-white font-semibold transition-all duration-300 shadow-md hover:shadow-xl hover:brightness-110 py-6 mt-2"
+                disabled={isLoading}
+              >
+                {isLoading ? "Criando conta..." : "Cadastrar Agora"}
+              </Button>
+
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

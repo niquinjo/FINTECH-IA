@@ -1,8 +1,17 @@
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
+const DEFAULT_API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333";
 
 export function getApiUrl() {
-  return API_URL;
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+
+    if (host && host !== "localhost" && host !== "127.0.0.1" && host !== "0.0.0.0") {
+      const protocol = window.location.protocol === "https:" ? "https" : "http";
+      return `${protocol}://${host}:3333`;
+    }
+  }
+
+  return DEFAULT_API_URL;
 }
 
 interface FetchOptions extends RequestInit {
@@ -29,7 +38,7 @@ export async function apiClient<T>(
     headers["Content-Type"] = "application/json"
   }
 
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await fetch(`${getApiUrl()}${endpoint}`, {
     ...fetchOptions,
     headers
   })

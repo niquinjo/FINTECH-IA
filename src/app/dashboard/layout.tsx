@@ -19,7 +19,7 @@ export default async function DashboardLayout({
         {/*header mobile */}
         <MobileSidebar />
         <main className="flex-1 overflow-auto">
-          <div className="container max-w-full px-4 py-6">
+          <div className="container max-w-full">
             {children}
           </div>
         </main>

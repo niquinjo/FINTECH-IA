@@ -1,6 +1,7 @@
 "use client"
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import axios from 'axios';
+import { getApiUrl } from '@/lib/api';
 
 export default function GoogleLoginButton() {
 
@@ -11,7 +12,7 @@ export default function GoogleLoginButton() {
 
     try {
       // 2. Manda pro nosso Backend (Express)
-      const response = await axios.post("http://localhost:3333/session/google", {
+      const response = await axios.post(`${getApiUrl()}/session/google`, {
         googleToken: tokenDoGoogle
       });
 

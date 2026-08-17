@@ -35,62 +35,84 @@ export function LoginContent() {
   };
 
   return (
-    <div className="w-full max-w-md space-y-8 mt-3">
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle className='text-3xl mx-auto'>
-            Faça login
-          </CardTitle>
-          <h1 className='font-semibold mx-auto'>
-            Venha descobrir como organizar melhor sua vida!
-          </h1>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className='space-y-2'>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <div className="w-full space-y-6">
+      <div className="space-y-2 text-center lg:text-left">
+        <h1 className="text-4xl font-bold text-brand-dark tracking-tight">Faça login</h1>
+        <p className="text-brand-dark/80 font-medium">Venha descobrir como organizar melhor sua vida!</p>
+      </div>
 
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email*</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="Digite seu email..." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+      <Form {...form}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit(onSubmit)(e);
+          }}
+          className="space-y-4"
+        >
 
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Senha*</FormLabel>
-                      <FormControl>
-                        <Input type="password" placeholder="Digite sua senha..." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-brand-dark font-bold">Email</FormLabel>
+                <FormControl>
+                  <Input
+                    className="bg-white border-transparent focus:border-brand-primary text-black shadow-sm"
+                    placeholder="seu@email.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                {errorMessage && (
-                  <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
-                )}
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-brand-dark font-bold">Senha</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    className="bg-white border-transparent focus:border-brand-primary text-black shadow-sm"
+                    placeholder="Digite sua senha..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Entrando..." : "Entrar"}
-                </Button>
+          {errorMessage && (
+            <p className="text-red-700 bg-red-100 p-2 rounded text-sm font-semibold text-center">{errorMessage}</p>
+          )}
 
-              </form>
-            </Form>
-          </div>
-        </CardContent>
-      </Card>
+          <Button
+            type="submit"
+            className="w-full bg-linear-to-br
+            from-brand-secondary 
+            to-brand-primary  
+            text-white 
+            font-semibold 
+            transition-all 
+            shadow-md py-6
+            hover:from-brand-accent
+            hover:to-brand-muted
+            hover:brightness-110
+            hover:shadow-xl
+            duration-300
+            "
+            disabled={isLoading}
+          >
+            {isLoading ? "Entrando..." : "Entrar"}
+          </Button>
+
+        </form>
+      </Form>
     </div>
   )
 }

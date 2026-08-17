@@ -36,37 +36,39 @@ export default function MonthFilter() {
     const params = new URLSearchParams(searchParams);
     params.set("month", newMonth.toString());
     params.set("year", newYear.toString());
-    
+
     router.push(`${pathname}?${params.toString()}`);
   };
 
   const dateObj = new Date(currentYear, currentMonth - 1);
-  const monthName = new Intl.DateTimeFormat("pt-BR", { 
-    month: "long", 
-    year: "numeric" 
+  const monthName = new Intl.DateTimeFormat("pt-BR", {
+    month: "long",
+    year: "numeric"
   }).format(dateObj);
 
   return (
-    <div className="flex items-center gap-4">
-      <Button 
-        variant="outline" 
-        size="icon" 
+    <div className="flex items-center gap-4 ">
+      <Button
+        variant="outline"
+        size="icon"
+        className="bg-brand-accent"
         onClick={() => handleMonthChange("prev")}
       >
-        <ChevronLeft className="h-4 w-4" />
+        <ChevronLeft className="h-4 w-4 text-black" />
       </Button>
-      
+
       {/* O capitalize deixa a primeira letra do mês maiúscula */}
       <span className="font-semibold capitalize min-w-[160px] text-center">
         {monthName}
       </span>
-      
-      <Button 
-        variant="outline" 
-        size="icon" 
+
+      <Button
+        variant="outline"
+        size="icon"
+        className="bg-brand-accent"
         onClick={() => handleMonthChange("next")}
       >
-        <ChevronRight className="h-4 w-4" />
+        <ChevronRight className="h-4 w-4 text-black" />
       </Button>
     </div>
   );
