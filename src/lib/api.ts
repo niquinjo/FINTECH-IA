@@ -1,27 +1,22 @@
-
-const DEFAULT_API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333";
+const DEFAULT_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
 export function getApiUrl() {
-  if (typeof window !== "undefined") {
-    const host = window.location.hostname;
-
-    if (host && host !== "localhost" && host !== "127.0.0.1" && host !== "0.0.0.0") {
-      const protocol = window.location.protocol === "https:" ? "https" : "http";
-      return `${protocol}://${host}:3333`;
-    }
+  // Se a variável de ambiente estiver definida (como na Vercel apontando para o Render), usa ela diretamente.
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
   }
 
+  // Se não houver variável (desenvolvimento local puro), cai no localhost
   return DEFAULT_API_URL;
 }
 
 interface FetchOptions extends RequestInit {
   token?: string;
-
 }
 
-//o <T> é um tipo genérico do TS, ou seja, assume o tipo que for atribuido para ele. neste caso retornamos uma promise.
+// Função genérica para requisições
 export async function apiClient<T>(
-  endpoint: string,  //aqui seria  a URL. ex: /user...
+  endpoint: string,
   options: FetchOptions = {}
 ): Promise<T> {
   const { token, ...fetchOptions } = options
@@ -38,6 +33,7 @@ export async function apiClient<T>(
     headers["Content-Type"] = "application/json"
   }
 
+  // Aqui agora vai usar corretamente a URL do Render em produção
   const response = await fetch(`${getApiUrl()}${endpoint}`, {
     ...fetchOptions,
     headers
@@ -51,6 +47,4 @@ export async function apiClient<T>(
   }
 
   return response.json()
-
 }
-
