@@ -17,13 +17,11 @@ export default function GoogleLoginButton() {
       });
 
       // 3. O nosso Backend respondeu com o NOSSO Token JWT e os dados do usuário!
-      const { token, name, email, profile } = response.data;
+      const { token, name, email } = response.data;
 
       // 4. Salva o nosso token nos cookies ou localStorage e manda pro Dashboard!
       localStorage.setItem("@fintech.token", token);
-      alert(`Bem-vindo(a), ${name}!`);
-      // redirecionar para o /dashboard...
-
+      window.location.href = '/dashboard';
     } catch (error) {
       console.log("Erro ao validar com nosso backend", error);
     }
