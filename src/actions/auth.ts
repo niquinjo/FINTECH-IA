@@ -44,3 +44,13 @@ export async function logoutUser() {
   await removeToken();
   redirect("/")
 }
+
+export async function loginGoogleUser(
+  token: string
+) {
+  await setToken(token);
+
+  return {
+    success: true
+  };
+}

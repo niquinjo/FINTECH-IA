@@ -2,6 +2,8 @@ const API_URL =
   process.env.NEXT_PUBLIC_API_URL ??
   "http://localhost:3333";
 
+console.log("ENV API URL:", API_URL);
+
 export function getApiUrl(): string {
   return API_URL.replace(/\/$/, "");
 }
