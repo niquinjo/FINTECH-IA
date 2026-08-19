@@ -41,8 +41,13 @@ export async function loginUser(data: { email: string, password: string }) {
 }
 
 export async function logoutUser() {
+  console.log("LOGOUT INICIADO");
+
   await removeToken();
-  redirect("/")
+
+  console.log("TOKEN REMOVIDO");
+
+  redirect("/");
 }
 
 export async function loginGoogleUser(

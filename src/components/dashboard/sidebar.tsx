@@ -91,7 +91,7 @@ export default function Sidebar({ userName }: SidebarProps) {
         })}
       </nav>
 
-      {/* BOTÃO DE SAIR ELEGANTE */}
+      {/* BOTÃO DE SAIR */}
       <div className="p-4 border-t border-white/10 mt-auto">
         <form action={logoutUser}>
           <Button
