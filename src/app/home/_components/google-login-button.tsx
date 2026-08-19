@@ -41,11 +41,16 @@ export default function GoogleLoginButton() {
   };
 
   return (
-
-    <GoogleLogin
-      onSuccess={handleGoogleSuccess}
-      onError={() => console.log('Login Falhou')}
-    />
+    <div className="w-full flex justify-center">
+      <GoogleLogin
+        onSuccess={handleGoogleSuccess}
+        onError={() => console.log('Login Falhou')}
+        theme="filled_blue"
+        shape="pill"
+        text="signin_with"
+        size="large"
+      />
+    </div>
   )
 
 }
