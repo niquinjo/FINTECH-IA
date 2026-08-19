@@ -47,7 +47,7 @@ export async function logoutUser() {
 
   console.log("TOKEN REMOVIDO");
 
-  redirect("/");
+  redirect("/home");
 }
 
 export async function loginGoogleUser(
