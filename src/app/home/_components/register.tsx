@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { registerUser } from '../../../actions/auth';
+import { redirect } from 'next/navigation';
 
 export function RegisterContent() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +30,7 @@ export function RegisterContent() {
     if (result.success) {
       setIsOpen(false);
       form.reset();
+      redirect("/dashboard")
     } else {
       setErrorMessage(result.error);
     }
